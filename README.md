@@ -5,6 +5,8 @@ Methods:
 - SIR 
 - Exponential regression
 
+We also allow shift to only focus modeling on points after a certain number of cases has been detected
+
 ## Data
 Data is obtained at [https://covidtracking.com/](https://covidtracking.com/)
 
