@@ -2,6 +2,11 @@ import requests, zipfile, io
 from us import states
 import numpy as np
 import pandas as pd
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-o', '--output', help="Output Path", default ='results')
+args = parser.parse_args()
 
 def fromStateToAbbr(state):
     search = states.lookup(state)
@@ -10,7 +15,7 @@ def fromStateToAbbr(state):
     else:
         return np.nan
 
-download_last = False # Download only the last if True
+download_last = True # Download only the last if True
 urls = ['https://ihmecovid19storage.blob.core.windows.net/latest/ihme-covid19.zip']
 
 if not download_last:
@@ -34,7 +39,7 @@ for url in urls:
         ihme_predictions = ihme_predictions[['state', 'date', 'pred_hosp', 'pred_deaths']].dropna()
 
         for state in ihme_predictions.state.unique():
-            ihme_predictions[ihme_predictions.state == state][['date', 'pred_deaths', 'pred_hosp']].to_csv('results/ihme/{}_{}.csv'.format(state, date), index = False)
+            ihme_predictions[ihme_predictions.state == state][['date', 'pred_deaths', 'pred_hosp']].to_csv(os.path.join(args.output, 'ihme', '{}_{}.csv'.format(state, date)), index = False)
 
     except Exception as e:
         print("Format has changed")
