@@ -43,7 +43,7 @@ for url in urls:
         ihme_predictions = pd.read_csv(z.open(csv_path), parse_dates=True)
         ihme_predictions['date'] = ihme_predictions[[c for c in ihme_predictions.columns if 'date' in c][0]] # Change name in some version 
         ihme_predictions['state'] = ihme_predictions[[c for c in ihme_predictions.columns if 'location' in c][0]].apply(fromStateToAbbr) # Change name in some version
-        ihme_predictions['pred_deaths'] = ihme_predictions['deaths_mean']
+        ihme_predictions['pred_deaths'] = ihme_predictions['totdea_mean']
         ihme_predictions['pred_hosp'] = ihme_predictions['allbed_mean']
         ihme_predictions = ihme_predictions[['state', 'date', 'pred_hosp', 'pred_deaths']].dropna()
 
